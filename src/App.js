@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import Person from './Person/Person';
 import './App.css';
+
+// Components
+import Person from './Person/Person';
+import Validation from './Validation/Validation';
+import CharComponent from './CharComponent/CharComponent';
 
 class App extends Component {
   
@@ -10,7 +14,9 @@ class App extends Component {
       {id: 'tsls1', name: "Ivan", age: 16},
       {id: 'vsls1', name: "Pia", age: 3}
     ],
-    showPersons: false
+    showPersons: false,
+    text: '',
+    textNum: 0
   };
 
   nameHandler = (newName) => {
@@ -36,7 +42,7 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState({persons: persons});
+    this.setState({persons: persons });
   };
 
   togglePersonsHandler = () => {
@@ -48,6 +54,17 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons.splice(index, 1);
     this.setState({ persons: persons});
+  }
+
+  changeTextHandler = (e) => {
+    this.setState({textNum: e.target.value.length, text: e.target.value});
+  }
+
+  removeLetterHandler = (i) => {
+    const textArr = [...this.state.text.split('')];
+    textArr.splice(i, 1);
+    const newText = textArr.join('');
+    this.setState({text: newText, textNum: newText.length});
   }
 
   render() {
@@ -76,10 +93,19 @@ class App extends Component {
       );
     }
 
+    let characters = this.state.text.split('').map((cur, i) => {
+      return <CharComponent letter={cur} key={i} click={() => this.removeLetterHandler(i)} />;
+    });
+
     return (
       <div className="App">
         <h1>Hello, I'm a brand spanking new React App!</h1>
-        <p>This is really working!</p>
+        <div>
+          {characters}
+        </div>
+        <input onChange={this.changeTextHandler} type='text' value={this.state.text} />
+        <Validation min={5} textLen={this.state.textNum} />
+        <p><em>Text Number: </em>{this.state.textNum}</p>
 
         <button 
           style={style}
