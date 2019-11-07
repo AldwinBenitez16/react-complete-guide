@@ -5,6 +5,7 @@ import styles from './App.module.css';
 import Person from './Person/Person';
 import Validation from './Validation/Validation';
 import CharComponent from './CharComponent/CharComponent';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
   
@@ -68,32 +69,27 @@ class App extends Component {
   }
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer'
-    };
 
     let persons = null;
+    let btnClass = '';
+
     if(this.state.showPersons) {
       persons = (
         <div>
           {this.state.persons.map((person, i) => {
-            return <Person 
-            key={person.id}
-            click={() => this.deletePersonHandler(i)}
-            name={person.name} 
-            age={person.age} 
-            changed={(e) => this.changeNameHandler(e, person.id)}
-            />
+            return <ErrorBoundary key={person.id} >
+              <Person 
+              click={() => this.deletePersonHandler(i)}
+              name={person.name} 
+              age={person.age} 
+              changed={(e) => this.changeNameHandler(e, person.id)}
+              />
+            </ErrorBoundary>
           })}
         </div>
       );
 
-      style.backgroundColor = 'red';
+      btnClass = styles.Red;
     }
 
     let characters = this.state.text.split('').map((cur, i) => {
@@ -120,9 +116,7 @@ class App extends Component {
           <Validation min={5} textLen={this.state.textNum} />
           <p><em>Text Number: </em>{this.state.textNum}</p>
 
-          <button 
-            style={style}
-            onClick={this.togglePersonsHandler} >Toggle Persons
+          <button className={btnClass} onClick={this.togglePersonsHandler}>Toggle Persons
           </button>
           {persons}
         </div>
