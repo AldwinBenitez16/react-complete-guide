@@ -7,7 +7,7 @@ import Validation from './Validation/Validation';
 import CharComponent from './CharComponent/CharComponent';
 
 // HOC
-import Radium from 'radium';
+import Radium, { StyleRoot } from 'radium';
 
 class App extends Component {
   
@@ -121,22 +121,24 @@ class App extends Component {
     }
 
     return (
-      <div className="App">
-        <h1>Hello, I'm a brand spanking new React App!</h1>
-        <p className={classes.join(' ')} >This is really working!</p>
-        <div>
-          {characters}
-        </div>
-        <input onChange={this.changeTextHandler} type='text' value={this.state.text} />
-        <Validation min={5} textLen={this.state.textNum} />
-        <p><em>Text Number: </em>{this.state.textNum}</p>
+      <StyleRoot>
+        <div className="App">
+          <h1>Hello, I'm a brand spanking new React App!</h1>
+          <p className={classes.join(' ')} >This is really working!</p>
+          <div>
+            {characters}
+          </div>
+          <input onChange={this.changeTextHandler} type='text' value={this.state.text} />
+          <Validation min={5} textLen={this.state.textNum} />
+          <p><em>Text Number: </em>{this.state.textNum}</p>
 
-        <button 
-          style={style}
-          onClick={this.togglePersonsHandler} >Toggle Persons
-        </button>
-        {persons}
-      </div>
+          <button 
+            style={style}
+            onClick={this.togglePersonsHandler} >Toggle Persons
+          </button>
+          {persons}
+        </div>
+      </StyleRoot>
     );
   }
   // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
