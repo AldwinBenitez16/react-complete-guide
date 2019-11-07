@@ -69,7 +69,8 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
@@ -91,15 +92,27 @@ class App extends Component {
           })}
         </div>
       );
+
+      style.backgroundColor = 'red';
     }
 
     let characters = this.state.text.split('').map((cur, i) => {
       return <CharComponent letter={cur} key={i} click={() => this.removeLetterHandler(i)} />;
     });
 
+    let classes = [];
+
+    if(this.state.persons.length <= 2) {
+      classes.push('red');
+    }
+    if(this.state.persons.length <= 1) {
+      classes.push('bold');
+    }
+
     return (
       <div className="App">
         <h1>Hello, I'm a brand spanking new React App!</h1>
+        <p className={classes.join(' ')} >This is really working!</p>
         <div>
           {characters}
         </div>
