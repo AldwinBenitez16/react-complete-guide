@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
+import styles from './App.module.css';
 
 // Components
 import Person from './Person/Person';
 import Validation from './Validation/Validation';
 import CharComponent from './CharComponent/CharComponent';
-
-// HOC
-import Radium, { StyleRoot } from 'radium';
 
 class App extends Component {
   
@@ -77,11 +74,7 @@ class App extends Component {
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
+      cursor: 'pointer'
     };
 
     let persons = null;
@@ -101,10 +94,6 @@ class App extends Component {
       );
 
       style.backgroundColor = 'red';
-      style[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black'
-      }
     }
 
     let characters = this.state.text.split('').map((cur, i) => {
@@ -114,15 +103,14 @@ class App extends Component {
     let classes = [];
 
     if(this.state.persons.length <= 2) {
-      classes.push('red');
+      classes.push(styles.red);
     }
     if(this.state.persons.length <= 1) {
-      classes.push('bold');
+      classes.push(styles.bold);
     }
 
     return (
-      <StyleRoot>
-        <div className="App">
+        <div className={styles.App}>
           <h1>Hello, I'm a brand spanking new React App!</h1>
           <p className={classes.join(' ')} >This is really working!</p>
           <div>
@@ -138,10 +126,9 @@ class App extends Component {
           </button>
           {persons}
         </div>
-      </StyleRoot>
     );
   }
   // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
 }
 
-export default Radium(App);
+export default App;
