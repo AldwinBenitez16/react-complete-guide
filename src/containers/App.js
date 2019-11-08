@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import styles from './App.module.css';
 
 // Components
-import Person from './Person/Person';
-import Validation from './Validation/Validation';
-import CharComponent from './CharComponent/CharComponent';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import Persons from '../components/Persons/Persons';
+import Validation from '../components/Validation/Validation';
+import CharComponent from '../components/CharComponent/CharComponent';
 
 class App extends Component {
   
@@ -76,16 +75,10 @@ class App extends Component {
     if(this.state.showPersons) {
       persons = (
         <div>
-          {this.state.persons.map((person, i) => {
-            return <ErrorBoundary key={person.id} >
-              <Person 
-              click={() => this.deletePersonHandler(i)}
-              name={person.name} 
-              age={person.age} 
-              changed={(e) => this.changeNameHandler(e, person.id)}
-              />
-            </ErrorBoundary>
-          })}
+          <Persons 
+            persons={this.state.persons}
+            clicked={this.deletePersonHandler}
+            change={this.changeNameHandler} />
         </div>
       );
 
@@ -109,12 +102,12 @@ class App extends Component {
         <div className={styles.App}>
           <h1>Hello, I'm a brand spanking new React App!</h1>
           <p className={classes.join(' ')} >This is really working!</p>
-          <div>
+          {/* <div>
             {characters}
           </div>
           <input onChange={this.changeTextHandler} type='text' value={this.state.text} />
           <Validation min={5} textLen={this.state.textNum} />
-          <p><em>Text Number: </em>{this.state.textNum}</p>
+          <p><em>Text Number: </em>{this.state.textNum}</p> */}
 
           <button className={btnClass} onClick={this.togglePersonsHandler}>Toggle Persons
           </button>
