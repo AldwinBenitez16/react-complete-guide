@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './Cockpit.module.css';
 
-const cockpit = (props) => {
+const Cockpit = (props) => {
+    useEffect(() => {
+        console.log('[Cockpit.js] useEffect'); 
+        return () => {
+            console.log('cleanup cleanup cleanup!!!');
+        }
+    }, []); 
+
+    useEffect(() => {
+        console.log('[Cockpit.js] 2nd useEffect'); 
+        return () => {
+            console.log('cleanup cleanup 2nd cleanup!!!');
+        }
+    }); 
 
     let btnClass = '';
 
@@ -18,7 +31,7 @@ const cockpit = (props) => {
 
     return(
         <div className={styles.Cockpit} >
-            <h1>Hello, I'm a brand spanking new React App!</h1>
+            <h1>{props.title}</h1>
             <p className={classes.join(' ')} >This is really working!</p>
             <button className={btnClass} onClick={props.clicked}>Toggle Persons
             </button>
@@ -33,4 +46,4 @@ const cockpit = (props) => {
 <Validation min={5} textLen={this.state.textNum} />
 <p><em>Text Number: </em>{this.state.textNum}</p> */}
 
-export default cockpit;
+export default Cockpit;
