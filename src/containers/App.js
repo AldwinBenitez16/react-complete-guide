@@ -3,6 +3,7 @@ import styles from './App.module.css';
 
 // Components
 import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 import Validation from '../components/Validation/Validation';
 import CharComponent from '../components/CharComponent/CharComponent';
 
@@ -70,47 +71,24 @@ class App extends Component {
   render() {
 
     let persons = null;
-    let btnClass = '';
 
     if(this.state.showPersons) {
-      persons = (
-        <div>
-          <Persons 
+      persons = <Persons 
             persons={this.state.persons}
             clicked={this.deletePersonHandler}
-            change={this.changeNameHandler} />
-        </div>
-      );
-
-      btnClass = styles.Red;
+            change={this.changeNameHandler} />;
     }
 
     let characters = this.state.text.split('').map((cur, i) => {
       return <CharComponent letter={cur} key={i} click={() => this.removeLetterHandler(i)} />;
     });
 
-    let classes = [];
-
-    if(this.state.persons.length <= 2) {
-      classes.push(styles.red);
-    }
-    if(this.state.persons.length <= 1) {
-      classes.push(styles.bold);
-    }
-
     return (
         <div className={styles.App}>
-          <h1>Hello, I'm a brand spanking new React App!</h1>
-          <p className={classes.join(' ')} >This is really working!</p>
-          {/* <div>
-            {characters}
-          </div>
-          <input onChange={this.changeTextHandler} type='text' value={this.state.text} />
-          <Validation min={5} textLen={this.state.textNum} />
-          <p><em>Text Number: </em>{this.state.textNum}</p> */}
-
-          <button className={btnClass} onClick={this.togglePersonsHandler}>Toggle Persons
-          </button>
+          <Cockpit 
+            showPersons={this.state.showPersons}
+            persons={this.state.persons}  
+            clicked={this.togglePersonsHandler} />
           {persons}
         </div>
     );
