@@ -4,7 +4,9 @@ import styles from './Person.module.css';
 
 // HOC
 import withClass from '../../../hoc/withClass';
-import Auxiliary from '../../../hoc/Auxiliary';
+
+// Context
+import AuthContext from '../../../context/auth-context';
 
 class Person extends Component {
     constructor(props) {
@@ -18,9 +20,12 @@ class Person extends Component {
 
     render() {
         console.log('[Person.js] rendering...');
-        const { name, age, click, changed, children } = this.props;
+        const { name, age, click, changed,  children } = this.props;
         return (
             <Fragment>
+                <AuthContext.Consumer>
+                    {context => context.authenticated ? <p>Authenticated!</p> : <p>Please log in! </p>}
+                </AuthContext.Consumer>
                 <p key="i1" onClick={click}> Hi, my name is {name} and I am {age} years old!</p>
                 <p key="i2">{children}</p>
                 <input key="i3" ref={this.inputElementRef} type="" onChange={changed} value={name} /> 

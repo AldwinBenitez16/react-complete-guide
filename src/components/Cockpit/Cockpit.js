@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './Cockpit.module.css';
 
+// Context
+import AuthContext from '../../context/auth-context';
+
 const Cockpit = (props) => {
     const toggleBtnRef = useRef(null);
 
@@ -38,15 +41,11 @@ const Cockpit = (props) => {
             <p className={classes.join(' ')} >This is really working!</p>
             <button ref={toggleBtnRef} className={btnClass} onClick={props.clicked}>Toggle Persons
             </button>
+            <AuthContext.Consumer>
+                {context => <button onClick={context.login}>Log in</button>}
+            </AuthContext.Consumer>
         </div>
     );
 }
-
-{/* <div>
-{characters}
-</div>
-<input onChange={this.changeTextHandler} type='text' value={this.state.text} />
-<Validation min={5} textLen={this.state.textNum} />
-<p><em>Text Number: </em>{this.state.textNum}</p> */}
 
 export default React.memo(Cockpit);

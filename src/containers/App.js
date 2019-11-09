@@ -11,6 +11,9 @@ import CharComponent from '../components/CharComponent/CharComponent';
 import Auxiliary from '../hoc/Auxiliary';
 import withClass from '../hoc/withClass';
 
+// Context
+import AuthContext from '../context/auth-context';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +31,8 @@ class App extends Component {
     text: '',
     textNum: 0,
     showCockpit: true,
-    changeCounter: 0
+    changeCounter: 0,
+    authenticated: false
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -74,24 +78,28 @@ class App extends Component {
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
     this.setState({showPersons: !doesShow});
-  }
+  };
 
   deletePersonHandler = (index) => {
     const persons = [...this.state.persons];
     persons.splice(index, 1);
     this.setState({ persons: persons});
-  }
+  };
 
   changeTextHandler = (e) => {
     this.setState({textNum: e.target.value.length, text: e.target.value});
-  }
+  };
 
   removeLetterHandler = (i) => {
     const textArr = [...this.state.text.split('')];
     textArr.splice(i, 1);
     const newText = textArr.join('');
     this.setState({text: newText, textNum: newText.length});
-  }
+  };
+
+  loginHandler = () => {
+    this.setState({ authenticated: true });
+  };
 
   render() {
     console.log('[App.js] render');
@@ -101,7 +109,8 @@ class App extends Component {
       persons = <Persons 
             persons={this.state.persons}
             clicked={this.deletePersonHandler}
-            changed={this.changeNameHandler} />;
+            changed={this.changeNameHandler} 
+            isAuthenticated={this.state.authenticated} />;
     }
 
     let characters = this.state.text.split('').map((cur, i) => {
@@ -111,13 +120,20 @@ class App extends Component {
     return (
         <Auxiliary>
           <button onClick={() => {this.setState({ showCockpit: false })}}>Remove CockPit</button>
-          {this.state.showCockpit ? <Cockpit 
-            title={this.props.title}
-            showPersons={this.state.showPersons}
-            personLength={this.state.persons.length}  
-            clicked={this.togglePersonsHandler} />
-            : null}
-          {persons}
+          <AuthContext.Provider value={{
+            authenticated: this.state.authenticated,
+            login: this.loginHandler
+            }}>
+            {this.state.showCockpit ? 
+            <Cockpit 
+              title={this.props.title}
+              showPersons={this.state.showPersons}
+              personLength={this.state.persons.length}  
+              clicked={this.togglePersonsHandler} 
+              login={this.loginHandler} />
+              : null}
+            {persons}
+          </AuthContext.Provider>
         </Auxiliary>
     );
   }
