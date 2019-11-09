@@ -8,7 +8,8 @@ import Validation from '../components/Validation/Validation';
 import CharComponent from '../components/CharComponent/CharComponent';
 
 // HOC Components
-import WithClass from '../hoc/WithClass';
+import Auxiliary from '../hoc/Auxiliary';
+import withClass from '../hoc/withClass';
 
 class App extends Component {
   constructor(props) {
@@ -102,7 +103,7 @@ class App extends Component {
     });
 
     return (
-        <WithClass classes={styles.App}>
+        <Auxiliary>
           <button onClick={() => {this.setState({ showCockpit: false })}}>Remove CockPit</button>
           {this.state.showCockpit ? <Cockpit 
             title={this.props.title}
@@ -111,10 +112,10 @@ class App extends Component {
             clicked={this.togglePersonsHandler} />
             : null}
           {persons}
-        </WithClass>
+        </Auxiliary>
     );
   }
   // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
 }
 
-export default App;
+export default withClass(App, styles.App);
