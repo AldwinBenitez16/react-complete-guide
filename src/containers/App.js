@@ -7,6 +7,9 @@ import Cockpit from '../components/Cockpit/Cockpit';
 import Validation from '../components/Validation/Validation';
 import CharComponent from '../components/CharComponent/CharComponent';
 
+// HOC Components
+import WithClass from '../hoc/WithClass';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -99,7 +102,7 @@ class App extends Component {
     });
 
     return (
-        <div className={styles.App}>
+        <WithClass classes={styles.App}>
           <button onClick={() => {this.setState({ showCockpit: false })}}>Remove CockPit</button>
           {this.state.showCockpit ? <Cockpit 
             title={this.props.title}
@@ -108,7 +111,7 @@ class App extends Component {
             clicked={this.togglePersonsHandler} />
             : null}
           {persons}
-        </div>
+        </WithClass>
     );
   }
   // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
